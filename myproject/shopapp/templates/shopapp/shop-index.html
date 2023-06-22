@@ -1,0 +1,45 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Title of shop_index.html page
+{% endblock %}
+
+{% block body %}
+    <h1>Body of shop_index.html page</h1>
+
+    <div>
+        <p>Давайте сгенерируем случайное число: {{ random_num }}</p>
+        {% if random_num is 100 %}
+            <p>ДЖЕКПОТ!!!</p>
+        {% elif random_num > 50 %}
+            <p>Нам крупно повезло!</p>
+        {% elif random_num <= 50 %}
+            <p>Нам тоже повезло, но немного поменьше...</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <p>Сегодняшние покупки:</p>
+        <ol>
+        {% for purchase in purchases %}
+            <li>{{ purchase.customer }}: {{ purchase.item }} за ${{ purchase.price }}</li>
+        {% empty %}
+            <p>Увы и ах, сегодня к нам ещё никто не заходил :(</p>
+        {% endfor %}
+        </ol>
+    </div>
+
+    <div>
+            {% now "H" as current_hour %}
+            Скидки растут не по дням, а по часам! Прямо сейчас {{ current_hour }}% !
+    </div>
+
+    <div>
+        <p>{{ test_string|cut:' ' }}</p>
+        <p>{{ test_string|add:'. Вот так.' }}</p>
+        {% for word in test_string.split %}
+            {{ word|length }}
+        {% endfor %}
+    </div>
+
+{% endblock %}
