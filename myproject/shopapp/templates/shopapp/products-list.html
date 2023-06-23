@@ -1,0 +1,20 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Products list title
+{% endblock %}
+
+{% block body %}
+    <h1>Products list body</h1>
+    <div>
+    <h3>Список продуктов:</h3>
+    <ol>
+        {% for product in products %}
+            <li>{{ product.name }} (${{ product.price }} цена без скидки)</li>
+            <sub>-> {{ product.description }}</sub>
+        {% empty %}
+            Товары закончились!
+        {% endfor %}
+    </ol>
+    </div>
+{% endblock %}

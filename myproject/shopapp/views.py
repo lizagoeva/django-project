@@ -1,21 +1,29 @@
-from random import randint
 from django.shortcuts import render
 from django.http import HttpRequest
-from timeit import default_timer
+from .models import Product, Order
 
 
 def shop_index(request: HttpRequest):
-    purchases = [
-        {'customer': 'Боб', 'item': 'шляпа', 'price': 500},
-        {'customer': 'Моника', 'item': 'шоколадка', 'price': 100},
-        {'customer': 'Тайлер', 'item': 'гитара', 'price': 900},
-        {'customer': 'Джош', 'item': 'машина', 'price': 5000},
-        {'customer': 'Ник', 'item': 'футболка', 'price': 700},
-    ]
+    page_urls = {
+        'products': request.build_absolute_uri() + 'products/',
+        'orders': request.build_absolute_uri() + 'orders/',
+    }
+    print(page_urls)
     context = {
-        'time_running': default_timer(),
-        'random_num': randint(1, 100),
-        'purchases': purchases,
-        'test_string': 'Каждый охотник желает знать где сидит фазан',
+        'page_urls': page_urls,
     }
     return render(request, 'shopapp/shop-index.html', context=context)
+
+
+def products_list(request: HttpRequest):
+    context = {
+        'products': Product.objects.all(),
+    }
+    return render(request, 'shopapp/products-list.html', context=context)
+
+
+def orders_list(request: HttpRequest):
+    context = {
+        'orders': Order.objects.prefetch_related('products').select_related('user').all(),
+    }
+    return render(request, 'shopapp/orders-list.html', context=context)

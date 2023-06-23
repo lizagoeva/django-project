@@ -1,0 +1,29 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Orders list title
+{% endblock %}
+
+{% block body %}
+    <h1>Orders list body</h1>
+    <div>
+    <h3>Список заказов:</h3>
+    <ul>
+        {% for order in orders %}
+            <li>Заказ №{{ order.id }} от {{ order.creation_time }} по промокоду <code>{{ order.promocode }}</code></li>
+            <p>Адрес доставки: {{ order.delivery_address}}</p>
+            <p>Заказчик: {{order.user }}</p>
+            <p>Список продуктов:</p>
+            <ol>
+                {% for product in order.products.all %}
+                    <li>{{ product.name }}, ${{ product.price }}</li>
+                {% empty %}
+                    Заказ оказался пуст
+                {% endfor %}
+            </ol>
+        {% empty %}
+            Заказов не найдено
+        {% endfor %}
+    </ul>
+    </div>
+{% endblock %}
