@@ -4,16 +4,15 @@ from django.shortcuts import render
 
 
 def handle_file_upload(request: HttpRequest) -> HttpResponse:
-    max_size_mb = 10
+    max_size_mb = 1
     if request.method == 'POST' and request.FILES.get('uploaded_file'):
         uploaded_file = request.FILES['uploaded_file']
-        if uploaded_file.size > max_size_mb * 1024 ** 2:
-            print('Uploaded file is too big: {:.2f} Mb (max {} Mb)'.format(
-                uploaded_file.size / 1024 / 1024, max_size_mb)
-            )
+        file_size_mb = uploaded_file.size / 1024 / 1024
+        if file_size_mb > max_size_mb:
+            print('Uploaded file is too big: {:.2f} Mb (max {} Mb)'.format(file_size_mb, max_size_mb))
             context = {
                 'max_size_mb': max_size_mb,
-                'uploaded_file_size_bytes': uploaded_file.size,
+                'uploaded_file_size_mb': file_size_mb,
             }
             return render(request, 'fileupload/file-too-big.html', context=context)
 

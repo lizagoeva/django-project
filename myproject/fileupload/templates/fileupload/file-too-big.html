@@ -5,7 +5,7 @@
 
 {% block body %}
     <h2>Oops, your file is too big for my form :(</h2>
-    <p>Your file size is {{ uploaded_file_size_bytes|floatformat:2 }} Mb</p>
+    <p>Your file size is {{ uploaded_file_size_mb|floatformat:2 }} Mb</p>
     <p>My maximum is {{ max_size_mb }} Mb</p>
     <p>Go to the previous page and try again! (with less size please)</p>
 {% endblock %}
