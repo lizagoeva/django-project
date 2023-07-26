@@ -1,0 +1,30 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Orders list title
+{% endblock %}
+
+{% block body %}
+    <h1>Список заказов:</h1>
+    <div>
+    <ul>
+        {% for order in orders %}
+            <li>
+                <a href="{% url 'shopapp:order_details' pk=order.pk %}">
+                    Заказ №{{ order.id }}
+                </a> от {{ order.creation_time }}</li>
+            <p>Заказчик: {{order.user }}</p>
+            <br>
+        {% empty %}
+            Заказов не найдено
+        {% endfor %}
+    </ul>
+    </div>
+
+    <div>
+        <a href="{% url 'shopapp:create_order' %}">
+            Нажмите, чтобы создать новый заказ
+        </a>
+    </div>
+
+{% endblock %}

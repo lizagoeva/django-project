@@ -1,0 +1,24 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+  Confirm archive {{ object.name }}
+{% endblock %}
+
+{% block body %}
+  <h1>Are you sure you want to archive product {{ object.name }}?</h1>
+  <br>
+  <div>
+    <a href="{% url 'shopapp:product_list' %}">Return to the products list</a>
+  </div>
+  <br>
+  <div>
+    <form method="post">
+      {% csrf_token %}
+<!--      {{ form.as_p }}
+          В видео-уроке была использована эта форма, но программа работает и без неё, не заметила разницы визуально и
+          в работе программы. Нужна ли она в итоге, и если да, то с какой целью? Заранее спасибо за ответ
+-->
+      <button type="submit">Delete product</button>
+    </form>
+  </div>
+{% endblock %}

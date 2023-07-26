@@ -5,22 +5,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Products list body</h1>
+    <h1>Список продуктов:</h1>
     <div>
-    <h3>Список продуктов:</h3>
-    <ol>
+    <ul>
         {% for product in products %}
-            <li>{{ product.name }} (${{ product.price }} цена без скидки)</li>
+            <li>
+                <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a>
+                (${{ product.price }})
+            </li>
             <sub>-> {{ product.description }}</sub>
         {% empty %}
             Товары закончились!
         {% endfor %}
-    </ol>
+    </ul>
     </div>
 
     <div>
         <a href="{% url 'shopapp:create_product' %}">
-            Click here to create a new product
+            Нажмите, чтобы создать новый продукт
         </a>
     </div>
 

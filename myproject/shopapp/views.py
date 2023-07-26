@@ -1,7 +1,13 @@
-from django.shortcuts import render, redirect, reverse
-from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, reverse
+from django.http import HttpRequest, HttpResponseRedirect
+from django.urls import reverse_lazy
 from .models import Product, Order
 from .forms import ProductForm, OrderForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+# todo есть вопрос по поводу middleware, который был в задании 5 модуля. Он был написан в приложении fileupload,
+#  почему если его подключить в настройках (сейчас он закомментирован), то срабатывать он будет и на запросы
+#  shopapp, а не только своего приложения? Он работает на всём проекте? И если это так, то почему его нужно было
+#  писать в fileuplod, а не в папке проекта myproject?
 
 
 def shop_index(request: HttpRequest):
@@ -16,45 +22,75 @@ def shop_index(request: HttpRequest):
     return render(request, 'shopapp/shop-index.html', context=context)
 
 
-def products_list(request: HttpRequest):
-    context = {
-        'products': Product.objects.all(),
-    }
-    return render(request, 'shopapp/products-list.html', context=context)
+class ProductListView(ListView):
+    queryset = Product.objects.filter(archived=False)
+    context_object_name = 'products'
 
 
-def create_product(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            redirect_url = reverse('shopapp:products_list')
-            return redirect(redirect_url)
-    else:
-        form = ProductForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'shopapp/create-product.html', context=context)
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def orders_list(request: HttpRequest):
-    context = {
-        'orders': Order.objects.prefetch_related('products').select_related('user').all(),
-    }
-    return render(request, 'shopapp/orders-list.html', context=context)
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('shopapp:product_list')
 
 
-def create_order(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            redirect_url = reverse('shopapp:orders_list')
-            return redirect(redirect_url)
-    else:
-        form = OrderForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'shopapp/create-order.html', context=context)
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = 'name', 'description', 'price', 'discount'
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse(
+            'shopapp:product_details',
+            kwargs={'pk': self.object.pk},
+        )
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('shopapp:product_list')
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.object.archived = True
+        self.object.save()
+        return HttpResponseRedirect(success_url)
+
+
+class OrderListView(ListView):
+    model = Order
+    context_object_name = 'orders'
+
+
+class OrderDetailView(DetailView):
+    queryset = (
+        Order.objects
+        .select_related('user')
+        .prefetch_related('products')
+    )
+
+
+class OrderCreateView(CreateView):
+    model = Order
+    form_class = OrderForm
+    success_url = reverse_lazy('shopapp:order_list')
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name_suffix = '_update_form'
+    fields = 'delivery_address', 'user', 'products'
+
+    def get_success_url(self):
+        return reverse(
+            'shopapp:order_details',
+            kwargs={'pk': self.object.pk},
+        )
+
+
+class OrderDeleteView(DeleteView):
+    model = Order
+    success_url = reverse_lazy('shopapp:order_list')

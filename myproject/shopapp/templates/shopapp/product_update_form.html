@@ -1,22 +1,22 @@
 {% extends 'shopapp/base.html' %}
 
 {% block title %}
-  Create order
+  Update product
 {% endblock %}
 
 {% block body %}
-  <h1>Create new order</h1>
+  <h1>Update product {{ object.name }}</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">
-      Create order!
+      Update product!
     </button>
   </form>
 
   <div>
-    <a href="{% url 'shopapp:orders_list' %}">
-      Click to return to the orders list
+    <a href="{% url 'shopapp:product_details' pk=object.pk %}">
+      Click to return to the product {{ object.name }}
     </a>
   </div>
 
