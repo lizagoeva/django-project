@@ -1,0 +1,17 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Shop index title
+{% endblock %}
+
+{% block body %}
+    <h1>Shop index body</h1>
+    <h3>Доступные страницы:</h3>
+    <ul>
+    {% for name, link in page_urls.items %}
+        <li><a href={{ link }}>{{ name }}</a></li>
+    {% empty %}
+        Нет доступных страниц :(
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from .models import Product, Order
 from .forms import ProductForm, OrderForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 
 def shop_index(request: HttpRequest):
@@ -23,17 +24,28 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'shopapp.add_product'
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('shopapp:product_list')
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(UserPassesTestMixin, UpdateView):
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        product_creator = self.get_object().created_by
+        return self.request.user.has_perm('shopapp.change_product') and product_creator == self.request.user
+
     model = Product
     fields = 'name', 'description', 'price', 'discount'
     template_name_suffix = '_update_form'
