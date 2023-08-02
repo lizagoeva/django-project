@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
+from django.views import View
 from .models import Product, Order
 from .forms import ProductForm, OrderForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -102,3 +103,22 @@ class OrderUpdateView(UpdateView):
 class OrderDeleteView(DeleteView):
     model = Order
     success_url = reverse_lazy('shopapp:order_list')
+
+
+class OrdersExportView(UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get(self, request: HttpRequest) -> JsonResponse:
+        orders = Order.objects.order_by('pk').all()
+        orders_data = [
+            {
+                'pk': order.pk,
+                'delivery_address': order.delivery_address,
+                'promocode': order.promocode,
+                'user_id': order.user.pk,
+                'products_id': [product.pk for product in order.products.all()],
+            }
+            for order in orders
+        ]
+        return JsonResponse({'orders': orders_data})

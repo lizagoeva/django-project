@@ -1,0 +1,119 @@
+[
+  {
+    "model": "shopapp.product",
+    "pk": 15,
+    "fields": {
+      "name": "TV",
+      "description": "super new tv",
+      "price": "5990.00",
+      "discount": 5,
+      "creation_time": "2023-07-30T19:14:49.806Z",
+      "archived": false,
+      "created_by": 1
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 16,
+    "fields": {
+      "name": "phone",
+      "description": "phone",
+      "price": "2999.00",
+      "discount": 15,
+      "creation_time": "2023-07-30T19:45:46.846Z",
+      "archived": false,
+      "created_by": 1
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 17,
+    "fields": {
+      "name": "sofa",
+      "description": "so comfortable to sit!",
+      "price": "599.00",
+      "discount": 10,
+      "creation_time": "2023-07-30T19:53:08.964Z",
+      "archived": false,
+      "created_by": 5
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 19,
+    "fields": {
+      "name": "free item",
+      "description": "absolutely free",
+      "price": "999.98",
+      "discount": 100,
+      "creation_time": "2023-07-30T19:57:21.883Z",
+      "archived": false,
+      "created_by": 5
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 21,
+    "fields": {
+      "name": "updated",
+      "description": "was updated by admin",
+      "price": "100.00",
+      "discount": 1,
+      "creation_time": "2023-07-30T20:19:27.380Z",
+      "archived": true,
+      "created_by": 5
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 22,
+    "fields": {
+      "name": "new",
+      "description": "new",
+      "price": "1010.00",
+      "discount": 10,
+      "creation_time": "2023-07-30T20:43:16.936Z",
+      "archived": true,
+      "created_by": 1
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 23,
+    "fields": {
+      "name": "new2",
+      "description": "by user 2\r\nupdated by admin",
+      "price": "122.96",
+      "discount": 9,
+      "creation_time": "2023-07-30T20:44:56.724Z",
+      "archived": true,
+      "created_by": 6
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 24,
+    "fields": {
+      "name": "new1",
+      "description": "by user1 updated, once again updated",
+      "price": "674382.00",
+      "discount": 99,
+      "creation_time": "2023-07-30T20:46:02.423Z",
+      "archived": true,
+      "created_by": 5
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 25,
+    "fields": {
+      "name": "updated new main",
+      "description": "new by admin superuser mega boss",
+      "price": "654.00",
+      "discount": 69,
+      "creation_time": "2023-07-30T20:46:57.427Z",
+      "archived": true,
+      "created_by": 1
+    }
+  }
+]

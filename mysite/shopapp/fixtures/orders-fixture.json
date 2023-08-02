@@ -1,0 +1,85 @@
+[
+  {
+    "model": "shopapp.order",
+    "pk": 1,
+    "fields": {
+      "delivery_address": "Улица Пушкина, дом Колотушкина/1",
+      "promocode": "SALESALE",
+      "creation_time": "2023-08-02T18:45:13.534Z",
+      "user": 1,
+      "products": [
+        21,
+        25,
+        19,
+        22,
+        15
+      ]
+    }
+  },
+  {
+    "model": "shopapp.order",
+    "pk": 2,
+    "fields": {
+      "delivery_address": "Улица Сезам",
+      "promocode": "KERMIT",
+      "creation_time": "2023-08-02T18:45:41.397Z",
+      "user": 7,
+      "products": [
+        17,
+        15,
+        24
+      ]
+    }
+  },
+  {
+    "model": "shopapp.order",
+    "pk": 3,
+    "fields": {
+      "delivery_address": "Улица Вязов",
+      "promocode": "HORROR",
+      "creation_time": "2023-08-02T18:45:59.224Z",
+      "user": 5,
+      "products": [
+        25,
+        19,
+        22,
+        16,
+        15
+      ]
+    }
+  },
+  {
+    "model": "shopapp.order",
+    "pk": 4,
+    "fields": {
+      "delivery_address": "Красная Площадь, д.1",
+      "promocode": "LUXURY",
+      "creation_time": "2023-08-02T18:46:22.835Z",
+      "user": 1,
+      "products": [
+        21,
+        23,
+        17,
+        25,
+        19,
+        22,
+        16,
+        15,
+        24
+      ]
+    }
+  },
+  {
+    "model": "shopapp.order",
+    "pk": 5,
+    "fields": {
+      "delivery_address": "Пизанская башня, 7 этаж",
+      "promocode": "PIZZA",
+      "creation_time": "2023-08-02T18:46:59.083Z",
+      "user": 6,
+      "products": [
+        16
+      ]
+    }
+  }
+]

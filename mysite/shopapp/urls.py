@@ -11,6 +11,7 @@ from .views import (
     OrderCreateView,
     OrderUpdateView,
     OrderDeleteView,
+    OrdersExportView,
 )
 
 app_name = 'shopapp'
@@ -23,6 +24,7 @@ urlpatterns = [
     path('products/<int:pk>/archive/', ProductDeleteView.as_view(), name='product_delete'),
     path('orders/', OrderListView.as_view(), name='order_list'),
     path('orders/create/', OrderCreateView.as_view(), name='create_order'),
+    path('orders/export/', OrdersExportView.as_view(), name='export_order'),
     path('orders/<int:pk>/', OrderDetailView.as_view(), name='order_details'),
     path('orders/<int:pk>/update/', OrderUpdateView.as_view(), name='order_update'),
     path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order_delete'),
