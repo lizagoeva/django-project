@@ -7,13 +7,28 @@
 {% block body %}
     <h1>User info</h1>
     {% if user.is_authenticated %}
+        <div>
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="{{ user.profile.avatar.name }}">
+            {% else %}
+                <p><span style="font-size:x-large">No avatar uploaded yet</span></p>
+            {% endif %}
+        </div>
+
         <h2>User details:</h2>
         <p>Username: {{ user.username }}</p>
         <p>First name: {{ user.first_name }}</p>
         <p>Last name: {{ user.last_name }}</p>
         <p>Email: {{ user.email }}</p>
         <p>Biography: {{ user.profile.bio }}</p>
+        <p><a href="{% url 'myauth:update_profile' pk=user.profile.pk %}">Update my profile</a></p>
     {% else %}
         <h2>Unknown user. <a href="{% url 'myauth:login' %}">Log in</a> for user info</h2>
     {% endif %}
+    <p><a href="{% url 'myauth:profile_list' %}">View all profiles</a></p>
+
+    <br>
+    <div>
+        <a href="{% url 'myauth:logout' %}">Logout</a>
+    </div>
 {% endblock %}

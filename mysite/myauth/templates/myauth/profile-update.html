@@ -1,0 +1,28 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+  Update profile
+{% endblock %}
+
+{% block body %}
+  <h1>Update {{ object.user }}'s profile info</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% if object.avatar %}
+        <img src="{{ object.avatar.url }}" alt="{{ object.avatar.name }}">
+    {% else %}
+        <p><span style="font-size:x-large">No avatar uploaded yet</span></p>
+    {% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+      Update profile!
+    </button>
+  </form>
+
+  <div>
+    <a href="{% url 'myauth:profile_details' pk=object.pk %}">
+      Click to return to the profile details
+    </a>
+  </div>
+
+{% endblock %}

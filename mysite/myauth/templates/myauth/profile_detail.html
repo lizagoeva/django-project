@@ -1,0 +1,34 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+  {{ object.user }} details
+{% endblock %}
+
+{% block body %}
+  <h1>{{ object.user }} profile details</h1>
+  <div>
+      <div>
+          {% if object.avatar %}
+              <img src="{{ object.avatar.url }}" alt="{{ object.avatar.name }}">
+          {% else %}
+              <p><span style="font-size:x-large">No avatar uploaded yet</span></p>
+          {% endif %}
+      </div>
+    <div>Username: <code>{{ object.user }}</code></div>
+    <div>First name: {% firstof object.user.first_name 'Not mentioned' %}</div>
+    <div>Last name: {% firstof object.user.last_name 'Not mentioned' %}</div>
+    <div>Bio: <i>{% firstof object.bio 'Not mentioned' %}</i></div>
+    <div>User agreement accepted: <i>{{ object.agreement_accepted }}</i></div>
+  </div>
+
+  <br>
+  {% if user.is_staff or user == object.user %}
+    <div>
+        <a href="{% url 'myauth:update_profile' pk=object.pk %}">Update this profile info</a>
+    </div>
+  {% endif %}
+  <div>
+    <a href="{% url 'myauth:profile_list' %}">Back to the profiles list</a>
+  </div>
+
+{% endblock %}

@@ -2,9 +2,35 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LogoutView, TemplateView
 from django.http import HttpRequest, HttpResponse
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from .models import Profile
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+class ProfilesListView(ListView):
+    queryset = Profile.objects.select_related('user').order_by('user')
+    context_object_name = 'profiles'
+
+
+class ProfileDetailView(DetailView):
+    queryset = Profile.objects.select_related('user')
+
+
+class ProfileUpdateView(UserPassesTestMixin, UpdateView):
+    def test_func(self):
+        profile_owner = self.get_object().user
+        return self.request.user.is_staff or profile_owner == self.request.user
+
+    model = Profile
+    fields = 'avatar', 'bio', 'agreement_accepted'
+    template_name = 'myauth/profile-update.html'
+
+    def get_success_url(self):
+        return reverse(
+            'myauth:profile_details',
+            kwargs={'pk': self.object.pk},
+        )
 
 
 class ProfileView(TemplateView):

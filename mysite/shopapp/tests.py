@@ -12,6 +12,7 @@ class OrderDetailViewTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.user = User.objects.create_user(username='test order details', password='testpassword')
         permission = Permission.objects.get(codename='view_order')
         cls.user.user_permissions.add(permission)
@@ -20,6 +21,7 @@ class OrderDetailViewTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        super().tearDownClass()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)

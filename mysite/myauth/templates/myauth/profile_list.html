@@ -1,0 +1,29 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+    Profiles list
+{% endblock %}
+
+{% block body %}
+    <h1>List of existing accounts:</h1>
+    <p><span style="font-size:x-large">
+        <a href="{% url 'myauth:about_me' %}">Open my profile</a>
+    </span></p>
+    <div>
+    <ul>
+        {% for profile in profiles %}
+            <li>
+                <a href="{% url 'myauth:profile_details' pk=profile.pk %}">{{ profile.user }}</a>
+            </li>
+            {% if profile.bio %}
+                <sub>-> {{ profile.bio }}</sub>
+            {% else %}
+                <sub>-- no bio --</sub>
+            {% endif %}
+        {% empty %}
+            No accounts created yet
+        {% endfor %}
+    </ul>
+    </div>
+
+{% endblock %}
