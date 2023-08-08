@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LogoutView, TemplateView
+from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, ListView, DetailView
@@ -33,8 +33,21 @@ class ProfileUpdateView(UserPassesTestMixin, UpdateView):
         )
 
 
-class ProfileView(TemplateView):
+class AboutMeView(UpdateView):
     template_name = 'myauth/about-me.html'
+    model = Profile
+    fields = 'avatar',
+    success_url = reverse_lazy('myauth:about_me')
+
+    def get_object(self, queryset=None):
+        obj = self.model.objects.get(pk=self.request.user.profile.pk)
+        return obj
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        current_profile = Profile.objects.get(user=self.object.user)
+        current_profile.save()
+        return response
 
 
 class RegisterView(CreateView):

@@ -8,12 +8,17 @@
     <h1>User info</h1>
     {% if user.is_authenticated %}
         <div>
-            {% if user.profile.avatar %}
+            {% if object.avatar %}
                 <img src="{{ user.profile.avatar.url }}" alt="{{ user.profile.avatar.name }}">
             {% else %}
                 <p><span style="font-size:x-large">No avatar uploaded yet</span></p>
             {% endif %}
         </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update profile picture</button>
+        </form>
 
         <h2>User details:</h2>
         <p>Username: {{ user.username }}</p>
