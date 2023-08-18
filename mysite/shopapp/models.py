@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class Product(models.Model):
     class Meta:
         ordering = ['price']
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
 
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=False)
@@ -23,6 +26,10 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    class Meta:
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
+
     delivery_address = models.TextField(blank=True, null=False)
     promocode = models.CharField(blank=True, max_length=8)
     creation_time = models.DateTimeField(auto_now_add=True)

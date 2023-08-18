@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-18 16:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: mysite/settings.py:127
+msgid "English"
+msgstr "English"
+
+#: mysite/settings.py:128
+msgid "Russian"
+msgstr "Russian"
+
+#: shopapp/models.py:10
+msgid "Product"
+msgstr "Product"
+
+#: shopapp/models.py:11
+msgid "Products"
+msgstr "Products"
+
+#: shopapp/models.py:30
+msgid "Order"
+msgstr "Order"
+
+#: shopapp/models.py:31
+msgid "Orders"
+msgstr "Orders"
+
+#: shopapp/templates/shopapp/product_detail.html:6
+#, python-format
+msgid ""
+"\n"
+"    Product №%(product_pk)s details\n"
+"  "
+msgstr ""
+"\n"
+"    Product №%(product_pk)s details\n"
+"  "
+
+#: shopapp/templates/shopapp/product_detail.html:12
+#, python-format
+msgid ""
+"\n"
+"    <h1>Product %(name)s (№%(pk)s) details</h1>\n"
+"  "
+msgstr ""
+"\n"
+"    <h1>Product %(name)s (№%(pk)s) details</h1>\n"
+"  "
+
+#: shopapp/templates/shopapp/product_detail.html:16
+msgid "Description"
+msgstr "Description"
+
+#: shopapp/templates/shopapp/product_detail.html:17
+msgid "Price"
+msgstr "Price"
+
+#: shopapp/templates/shopapp/product_detail.html:18
+msgid "Discount"
+msgstr "Discount"
+
+#: shopapp/templates/shopapp/product_detail.html:19
+msgid "Creation time"
+msgstr "Creation time"
+
+#: shopapp/templates/shopapp/product_detail.html:20
+msgid "Archived"
+msgstr "Archived"
+
+#: shopapp/templates/shopapp/product_detail.html:26
+msgid "Update this product info"
+msgstr "Update this product info"
+
+#: shopapp/templates/shopapp/product_detail.html:31
+msgid "Archive this product"
+msgstr "Archive this product"
+
+#: shopapp/templates/shopapp/product_detail.html:36
+msgid "See full products list"
+msgstr "See full products list"
+
+#: shopapp/templates/shopapp/product_list.html:6
+msgid "Products list title"
+msgstr "Products list title"
+
+#: shopapp/templates/shopapp/product_list.html:10
+msgid "Products list"
+msgstr "Products list"
+
+#: shopapp/templates/shopapp/product_list.html:13
+msgid ""
+"\n"
+"            <p>Only one product is available:</p>\n"
+"        "
+msgid_plural ""
+"\n"
+"            <p>%(products_amount)s products are available:</p>\n"
+"        "
+msgstr[0] ""
+"\n"
+"            <p>Only one product is available:</p>\n"
+"        "
+msgstr[1] ""
+"\n"
+"            <p>%(products_amount)s products are available:</p>\n"
+"        "
+
+#: shopapp/templates/shopapp/product_list.html:25
+msgid "Products list is empty!"
+msgstr "Products list is empty!"
+
+#: shopapp/templates/shopapp/product_list.html:33
+msgid "Click to create a new product"
+msgstr "Click to create a new product"

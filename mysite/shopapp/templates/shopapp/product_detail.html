@@ -1,28 +1,40 @@
 {% extends 'shopapp/base.html' %}
 
+{% load i18n %}
+
 {% block title %}
-  Product №{{ object.pk }} details
+  {% blocktranslate with product_pk=object.pk %}
+    Product №{{ product_pk }} details
+  {% endblocktranslate %}
 {% endblock %}
 
 {% block body %}
-  <h1>Product {{ object.name }} (№{{ object.pk }}) details</h1>
+  {% blocktranslate with name=object.name pk=object.pk %}
+    <h1>Product {{ name }} (№{{ pk }}) details</h1>
+  {% endblocktranslate %}
   <div>
-    <div>Description: <em>{{ object.description }}</em></div>
-    <div>Price: {{ object.price }}</div>
-    <div>Discount: {{ object.discount }}%</div>
-    <div>Creation time: <em>{{ object.creation_time }}</em></div>
-    <div>Archived: {{ object.archived }}</div>
+    <div>{% translate 'Description' %}: <em>{{ object.description }}</em></div>
+    <div>{% translate 'Price' %}: {{ object.price }}</div>
+    <div>{% translate 'Discount' %}: {{ object.discount }}%</div>
+    <div>{% translate 'Creation time' %}: <em>{{ object.creation_time }}</em></div>
+    <div>{% translate 'Archived' %}: {{ object.archived }}</div>
   </div>
 
   <br>
   <div>
-    <a href="{% url 'shopapp:product_update' pk=object.pk %}">Update this product info</a>
+    <a href="{% url 'shopapp:product_update' pk=object.pk %}">
+      {% translate 'Update this product info' %}
+    </a>
   </div>
   <div>
-    <a href="{% url 'shopapp:product_delete' pk=object.pk %}">Archive this product</a>
+    <a href="{% url 'shopapp:product_delete' pk=object.pk %}">
+      {% translate 'Archive this product' %}
+    </a>
   </div>
   <div>
-    <a href="{% url 'shopapp:product_list' %}">See full products list</a>
+    <a href="{% url 'shopapp:product_list' %}">
+      {% translate 'See full products list' %}
+    </a>
   </div>
 
 {% endblock %}
