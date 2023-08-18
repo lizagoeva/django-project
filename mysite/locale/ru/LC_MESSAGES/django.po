@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 16:06+0000\n"
+"POT-Creation-Date: 2023-08-18 16:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "Продукт"
 msgid "Products"
 msgstr "Продукты"
 
-#: shopapp/models.py:30
+#: shopapp/models.py:43
 msgid "Order"
 msgstr "Заказ"
 
-#: shopapp/models.py:31
+#: shopapp/models.py:44
 msgid "Orders"
 msgstr "Заказы"
 
@@ -85,15 +85,42 @@ msgstr "Время создания"
 msgid "Archived"
 msgstr "Архивация"
 
+#: shopapp/templates/shopapp/product_detail.html:23
+msgid "Product images"
+msgstr "Изображения продукта"
+
 #: shopapp/templates/shopapp/product_detail.html:26
+#, python-format
+msgid ""
+"\n"
+"      %(images_amount)s image is uploaded\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(images_amount)s images are uploaded\n"
+"    "
+msgstr[0] ""
+"\n"
+"      Загружено %(images_amount)s изображение\n"
+"    "
+msgstr[1] ""
+"\n"
+"      Загружено %(images_amount)s изображения\n"
+"    "
+msgstr[2] ""
+"\n"
+"      Загружено %(images_amount)s изображений\n"
+"    "
+
+#: shopapp/templates/shopapp/product_detail.html:44
 msgid "Update this product info"
 msgstr "Обновить информацию о продукте"
 
-#: shopapp/templates/shopapp/product_detail.html:31
+#: shopapp/templates/shopapp/product_detail.html:49
 msgid "Archive this product"
 msgstr "Заархивировать продукт"
 
-#: shopapp/templates/shopapp/product_detail.html:36
+#: shopapp/templates/shopapp/product_detail.html:54
 msgid "See full products list"
 msgstr "Посмотреть полный список продуктов"
 
@@ -105,31 +132,31 @@ msgstr "Список продуктов"
 msgid "Products list"
 msgstr "Список продуктов"
 
-#: shopapp/templates/shopapp/product_list.html:13
+#: shopapp/templates/shopapp/product_list.html:20
+msgid "Products list is empty!"
+msgstr "Товары закончились!"
+
+#: shopapp/templates/shopapp/product_list.html:23
 msgid ""
 "\n"
-"            <p>Only one product is available:</p>\n"
+"            <p>Only one product is available.</p>\n"
 "        "
 msgid_plural ""
 "\n"
-"            <p>%(products_amount)s products are available:</p>\n"
+"            <p>%(products_amount)s products are available.</p>\n"
 "        "
 msgstr[0] ""
 "\n"
-"            <p>Доступен %(products_amount)s продукт:</p>\n"
+"            <p>Доступен %(products_amount)s продукт.</p>\n"
 "        "
 msgstr[1] ""
 "\n"
-"            <p>Доступно %(products_amount)s продукта:</p>\n"
+"            <p>Доступно %(products_amount)s продукта.</p>\n"
 "        "
 msgstr[2] ""
 "\n"
-"            <p>Доступно %(products_amount)s продуктов:</p>\n"
+"            <p>Доступно %(products_amount)s продуктов.</p>\n"
 "        "
-
-#: shopapp/templates/shopapp/product_list.html:25
-msgid "Products list is empty!"
-msgstr "Товары закончились!"
 
 #: shopapp/templates/shopapp/product_list.html:33
 msgid "Click to create a new product"

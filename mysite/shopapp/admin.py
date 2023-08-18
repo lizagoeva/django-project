@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpRequest
-from .models import Product, Order
+from .models import Product, Order, ProductImage
 
 
 @admin.action(description='Archive products')
@@ -18,6 +18,10 @@ class OrderInline(admin.StackedInline):
     model = Product.orders.through
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     actions = [
@@ -26,6 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
     ]
     inlines = [
         OrderInline,
+        ProductImageInline,
     ]
     list_display = 'pk', 'name', 'description_short', 'price', 'discount', 'archived'
     list_display_links = 'pk', 'name'

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 16:06+0000\n"
+"POT-Creation-Date: 2023-08-18 16:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,11 +34,11 @@ msgstr "Product"
 msgid "Products"
 msgstr "Products"
 
-#: shopapp/models.py:30
+#: shopapp/models.py:43
 msgid "Order"
 msgstr "Order"
 
-#: shopapp/models.py:31
+#: shopapp/models.py:44
 msgid "Orders"
 msgstr "Orders"
 
@@ -84,15 +84,38 @@ msgstr "Creation time"
 msgid "Archived"
 msgstr "Archived"
 
+#: shopapp/templates/shopapp/product_detail.html:23
+msgid "Product images"
+msgstr "Product images"
+
 #: shopapp/templates/shopapp/product_detail.html:26
+#, python-format
+msgid ""
+"\n"
+"      %(images_amount)s image is uploaded\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(images_amount)s images are uploaded\n"
+"    "
+msgstr[0] ""
+"\n"
+"      %(images_amount)s image is uploaded\n"
+"    "
+msgstr[1] ""
+"\n"
+"      %(images_amount)s images are uploaded\n"
+"    "
+
+#: shopapp/templates/shopapp/product_detail.html:44
 msgid "Update this product info"
 msgstr "Update this product info"
 
-#: shopapp/templates/shopapp/product_detail.html:31
+#: shopapp/templates/shopapp/product_detail.html:49
 msgid "Archive this product"
 msgstr "Archive this product"
 
-#: shopapp/templates/shopapp/product_detail.html:36
+#: shopapp/templates/shopapp/product_detail.html:54
 msgid "See full products list"
 msgstr "See full products list"
 
@@ -104,27 +127,27 @@ msgstr "Products list title"
 msgid "Products list"
 msgstr "Products list"
 
-#: shopapp/templates/shopapp/product_list.html:13
+#: shopapp/templates/shopapp/product_list.html:20
+msgid "Products list is empty!"
+msgstr "Products list is empty!"
+
+#: shopapp/templates/shopapp/product_list.html:23
 msgid ""
 "\n"
-"            <p>Only one product is available:</p>\n"
+"            <p>Only one product is available.</p>\n"
 "        "
 msgid_plural ""
 "\n"
-"            <p>%(products_amount)s products are available:</p>\n"
+"            <p>%(products_amount)s products are available.</p>\n"
 "        "
 msgstr[0] ""
 "\n"
-"            <p>Only one product is available:</p>\n"
+"            <p>Only one product is available.</p>\n"
 "        "
 msgstr[1] ""
 "\n"
-"            <p>%(products_amount)s products are available:</p>\n"
+"            <p>%(products_amount)s products are available.</p>\n"
 "        "
-
-#: shopapp/templates/shopapp/product_list.html:25
-msgid "Products list is empty!"
-msgstr "Products list is empty!"
 
 #: shopapp/templates/shopapp/product_list.html:33
 msgid "Click to create a new product"

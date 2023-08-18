@@ -9,22 +9,22 @@
 {% block body %}
     <h1>{% translate 'Products list' %}</h1>
     <div>
-    <ul>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a>
+                    (${{ product.price }})
+                </li>
+                <sub>-> {{ product.description }}</sub>
+            {% empty %}
+                {% translate 'Products list is empty!' %}
+            {% endfor %}
+        </ul>
         {% blocktranslate count products_amount=products|length %}
-            <p>Only one product is available:</p>
+            <p>Only one product is available.</p>
         {% plural %}
-            <p>{{ products_amount }} products are available:</p>
+            <p>{{ products_amount }} products are available.</p>
         {% endblocktranslate %}
-        {% for product in products %}
-            <li>
-                <a href="{% url 'shopapp:product_details' pk=product.pk %}">{{ product.name }}</a>
-                (${{ product.price }})
-            </li>
-            <sub>-> {{ product.description }}</sub>
-        {% empty %}
-            {% translate 'Products list is empty!' %}
-        {% endfor %}
-    </ul>
     </div>
 
     {% if perms.shopapp.add_product %}

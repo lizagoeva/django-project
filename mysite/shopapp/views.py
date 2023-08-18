@@ -26,7 +26,7 @@ class ProductListView(ListView):
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
-    model = Product
+    queryset = Product.objects.prefetch_related('images')
 
 
 class ProductCreateView(PermissionRequiredMixin, CreateView):

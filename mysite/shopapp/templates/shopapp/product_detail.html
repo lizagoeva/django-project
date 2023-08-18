@@ -20,6 +20,24 @@
     <div>{% translate 'Archived' %}: {{ object.archived }}</div>
   </div>
 
+  <h3>{% translate 'Product images' %}:</h3>
+  <div>
+
+    {% blocktranslate count images_amount=object.images.all|length %}
+      {{ images_amount }} image is uploaded
+    {% plural %}
+      {{ images_amount }} images are uploaded
+    {% endblocktranslate %}
+
+    {% for img in object.images.all %}
+      <div><img src="{{ img.image.url }}" alt="img.image.name" style="margin-top:50px"></div>
+      {% if img.description %}
+        <sub>-> {{ img.description }}</sub>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <br>
   <br>
   <div>
     <a href="{% url 'shopapp:product_update' pk=object.pk %}">
