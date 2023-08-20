@@ -2,10 +2,15 @@ from django.shortcuts import render, reverse
 from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 from django.views import View
-from .models import Product, Order
-from .forms import ProductForm, OrderForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+from .models import Product, Order
+from .forms import ProductForm, OrderForm
+from .serializers import ProductSerializer, OrderSerializer
 
 
 def shop_index(request: HttpRequest):
@@ -18,6 +23,28 @@ def shop_index(request: HttpRequest):
         'page_urls': page_urls,
     }
     return render(request, 'shopapp/shop-index.html', context=context)
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all().select_related('created_by').prefetch_related('images')
+    serializer_class = ProductSerializer
+    filter_backends = [
+        SearchFilter,
+        OrderingFilter,
+    ]
+    search_fields = ['name', 'description']
+    ordering_fields = ['name', 'price', 'discount', 'creation_time']
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.select_related('user').prefetch_related('products')
+    serializer_class = OrderSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+    filterset_fields = ['delivery_address', 'promocode']
+    ordering_fields = ['delivery_address', 'creation_time']
 
 
 class ProductListView(ListView):
