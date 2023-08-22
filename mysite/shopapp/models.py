@@ -5,6 +5,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Product(models.Model):
+    """
+    Модель Product представляет сущность товара для продажи в интернет-магазине
+
+    Перейти к модели заказа: :model:`shopapp.Order`
+    """
     class Meta:
         ordering = ['price']
         verbose_name = _('Product')
@@ -33,12 +38,22 @@ def product_images_directory_path(instance: 'ProductImage', filename: str) -> st
 
 
 class ProductImage(models.Model):
+    """
+    Модель ProductImage представляет изображение товара
+
+    Модель продукта: :model:`shopapp.Product`
+    """
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=product_images_directory_path)
     description = models.CharField(max_length=200, null=True, blank=True)
 
 
 class Order(models.Model):
+    """
+    Модель Order представляет сущность заказа в интернет-магазине
+
+    Перейти к модели продукта: :model:`shopapp.Product`
+    """
     class Meta:
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
