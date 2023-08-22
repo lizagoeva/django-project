@@ -14,6 +14,8 @@ from .views import (
     OrderUpdateView,
     OrderDeleteView,
     OrdersExportView,
+)
+from .api import (
     ProductViewSet,
     OrderViewSet,
 )
