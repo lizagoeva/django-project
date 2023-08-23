@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('api/', SpectacularAPIView.as_view(), name='api'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='api'), name='swagger'),
+    path('blog/', include('blogapp.urls')),
 ]
 
 urlpatterns += i18n_patterns(
