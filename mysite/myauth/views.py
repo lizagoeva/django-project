@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from .models import Profile
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 
 class ProfilesListView(ListView):
@@ -33,7 +33,7 @@ class ProfileUpdateView(UserPassesTestMixin, UpdateView):
         )
 
 
-class AboutMeView(UpdateView):
+class AboutMeView(LoginRequiredMixin, UpdateView):
     template_name = 'myauth/about-me.html'
     model = Profile
     fields = 'avatar',
