@@ -14,6 +14,14 @@ from pathlib import Path
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+import sentry_sdk
+
+# SENTRY
+
+sentry_sdk.init(
+    dsn="https://0d7f5ec4f6b35e7258972bd05eb8d505@o4505776875896832.ingest.sentry.io/4505776881664000",
+    traces_sample_rate=1.0,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -166,7 +174,7 @@ MEDIA_ROOT = BASE_DIR / 'uploads/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = reverse_lazy('myauth:about_me')
-LOGIN_URL = reverse_lazy('myauth:login')
+LOGIN_URL = reverse_lazy('myauth:about_me')
 
 
 # Logging
@@ -202,6 +210,7 @@ LOGGING = {
             'logfile',
         ],
         'level': 'DEBUG',
+        'propagate': False,
     },
 }
 

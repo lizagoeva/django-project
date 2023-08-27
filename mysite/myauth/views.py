@@ -33,15 +33,20 @@ class ProfileUpdateView(UserPassesTestMixin, UpdateView):
         )
 
 
-class AboutMeView(LoginRequiredMixin, UpdateView):
+class AboutMeView(UpdateView):
     template_name = 'myauth/about-me.html'
     model = Profile
     fields = 'avatar',
     success_url = reverse_lazy('myauth:about_me')
 
     def get_object(self, queryset=None):
-        obj = self.model.objects.get(pk=self.request.user.profile.pk)
-        return obj
+        # for Sentry verifying
+        1 / 0
+        # print(self.request.unknown_argument)
+        # print(int('334f3'))
+        if self.request.user.is_authenticated:
+            obj = self.model.objects.get(pk=self.request.user.profile.pk)
+            return obj
 
     def form_valid(self, form):
         response = super().form_valid(form)
