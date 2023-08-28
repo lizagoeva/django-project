@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -28,6 +29,9 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return f'Product {self.name!r} with id {self.pk}'
+
+    def get_absolute_url(self):
+        return reverse('shopapp:product_details', kwargs={'pk': self.pk})
 
 
 def product_images_directory_path(instance: 'ProductImage', filename: str) -> str:
@@ -66,3 +70,6 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f'Order №{self.pk} for {self.user}'
+
+    def get_absolute_url(self):
+        return reverse('shopapp:order_details', kwargs={'pk': self.pk})

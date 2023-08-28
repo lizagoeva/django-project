@@ -17,10 +17,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
-
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+from .sitemaps import sitemaps
 
 urlpatterns = [
     path('accounts/', include('myauth.urls')),
@@ -28,6 +30,7 @@ urlpatterns = [
     path('api/', SpectacularAPIView.as_view(), name='api'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='api'), name='swagger'),
     path('blog/', include('blogapp.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
 
 urlpatterns += i18n_patterns(

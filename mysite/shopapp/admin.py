@@ -1,6 +1,13 @@
+from io import TextIOWrapper
+from csv import DictReader
+
 from django.contrib import admin
 from django.db.models import QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import path
+
+from .forms import CSVImportForm
 from .models import Product, Order, ProductImage
 
 
@@ -63,6 +70,7 @@ class ProductInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    change_list_template = 'shopapp/orders_changelist.html'
     inlines = [
         ProductInline,
     ]
@@ -89,3 +97,42 @@ class OrderAdmin(admin.ModelAdmin):
 
     def user_verbose(self, obj: Order) -> str:
         return obj.user.first_name or obj.user.username
+
+    def import_csv(self, request: HttpRequest) -> HttpResponse:
+        if request.method == 'GET':
+            form = CSVImportForm()
+            context = {
+                'form': form,
+            }
+            return render(request, 'admin/csv_form.html', context=context)
+        form = CSVImportForm(request.POST, request.FILES)
+        if not form.is_valid():
+            context = {
+                'form': form,
+            }
+            return render(request, 'admin/csv_form.html', context=context, status=400)
+
+        csv_file = TextIOWrapper(
+            form.files['csv_file'].file,
+            encoding=request.encoding,
+        )
+
+        csv_reader = DictReader(csv_file)
+
+        orders = [Order(**order_row) for order_row in csv_reader]
+        Order.objects.bulk_create(orders)
+        for order in orders:
+            Order.objects.filter(delivery_address=order.delivery_address).first().products.set([15, 30])
+        self.message_user(request, 'Orders data from CSV file imported successfully')
+        return redirect('..')
+
+    def get_urls(self):
+        urls = super().get_urls()
+        new_urls = [
+            path(
+                'import-orders-csv/',
+                self.import_csv,
+                name='import_orders_csv',
+            ),
+        ]
+        return new_urls + urls

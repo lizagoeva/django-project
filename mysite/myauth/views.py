@@ -41,7 +41,7 @@ class AboutMeView(UpdateView):
 
     def get_object(self, queryset=None):
         # for Sentry verifying
-        1 / 0
+        # 1 / 0
         # print(self.request.unknown_argument)
         # print(int('334f3'))
         if self.request.user.is_authenticated:

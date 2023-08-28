@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.syndication.views import Feed
 from django.shortcuts import render, reverse
 from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
@@ -168,3 +169,24 @@ class OrdersExportView(UserPassesTestMixin, View):
         ]
         logger.debug('Returning orders info: %s', orders_data)
         return JsonResponse({'orders': orders_data})
+
+
+class LatestProductsFeed(Feed):
+    title = 'The freshest products'
+    description = 'News about adding products or changing the existing ones'
+    link = reverse_lazy('shopapp:product_list')
+
+    def items(self):
+        return Product.objects.filter(archived=False).order_by('name')[:5]
+
+    def item_title(self, item: Product):
+        return item.name
+
+    def item_description(self, item: Product):
+        return item.description[:200]
+
+    def item_link(self, item: Product):
+        return reverse(
+            'shopapp:product_details',
+            kwargs={'pk': item.pk},
+        )

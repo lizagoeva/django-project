@@ -16,3 +16,7 @@ class OrderForm(forms.ModelForm):
             'delivery_address': forms.Textarea(attrs={'rows': 3}),
             'products': forms.CheckboxSelectMultiple(),
         }
+
+
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField()
