@@ -1,0 +1,62 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    User №{{ user.pk }}'s orders
+{% endblock %}
+
+{% block body %}
+    {% if user %}
+    <h1>{{ user.username }}'s orders</h1>
+        <div>
+        <ul>
+            {% for order in orders_list %}
+                <li>
+                    <a href="{% url 'shopapp:order_details' pk=order.pk %}">
+                        Order №{{ order.id }}
+                    </a>
+                </li>
+                <p>Delivery address: {{ order.delivery_address }}</p>
+                <p>Promocode used: <code>{{ order.promocode }}</code></p>
+                <p>Creation time: {{ order.creation_time }}</p>
+                <p>
+                    Products:
+                    <ol>
+                        {% for product in order.products.all %}
+                            <li>{{ product.name }} -  <i>{{ product.price }}$</i></li>
+                        {% empty %}
+                            No products in this order
+                        {% endfor %}
+                    </ol>
+                </p>
+                <br>
+            {% empty %}
+                <h2>{{ user.username }} does not have any orders yet</h2>
+            {% endfor %}
+        </ul>
+        </div>
+    <div>
+        <a href="{% url 'myauth:profile_details' pk=profile_id %}">
+            Detail info about {{ user.username }}
+        </a>
+    </div>
+    {% else %}
+        Something went wrong, no users received
+    {% endif %}
+
+    <div>
+        <a href="{% url 'shopapp:create_order' %}">
+            Create new order
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'myauth:profile_list' %}">
+            Full users list
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'shopapp:order_list' %}">
+            Full orders list
+        </a>
+    </div>
+
+{% endblock %}

@@ -28,6 +28,9 @@
     </div>
   {% endif %}
   <div>
+    <a href="{% url 'shopapp:orders_by_user' user_id=object.user.pk %}">See all this user's orders</a>
+  </div>
+  <div>
     <a href="{% url 'myauth:profile_list' %}">Back to the profiles list</a>
   </div>
 
