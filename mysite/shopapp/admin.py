@@ -119,10 +119,23 @@ class OrderAdmin(admin.ModelAdmin):
 
         csv_reader = DictReader(csv_file)
 
-        orders = [Order(**order_row) for order_row in csv_reader]
+        orders_data, product_ids = [], []
+        fields_to_unpack = ('delivery_address', 'promocode', 'user_id')
+        for row in csv_reader:
+            orders_data.append(
+                {field: row[field] for field in fields_to_unpack}
+            )
+            products = row['products']
+            product_ids.append(list(map(int, products.split(','))))
+
+        orders = [Order(**order_row) for order_row in orders_data]
         Order.objects.bulk_create(orders)
-        for order in orders:
-            Order.objects.filter(delivery_address=order.delivery_address).first().products.set([15, 30])
+
+        for order_num in range(len(orders)):
+            order_delivery_address = orders[order_num].delivery_address
+            order_products = product_ids[order_num]
+            Order.objects.filter(delivery_address=order_delivery_address).first().products.set(order_products)
+
         self.message_user(request, 'Orders data from CSV file imported successfully')
         return redirect('..')
 

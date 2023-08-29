@@ -1,4 +1,4 @@
-delivery_address,promocode,user_id
-"testing street, 1A","TEST1",8
-"testing street, 1B","TEST2",6
-"baker street, 221B","SHERLOCK",1
+delivery_address,promocode,user_id,products
+"testing street, 1A","TEST1",8,"15,30"
+"testing street, 1B","TEST2",6,"15"
+"baker street, 221B","SHERLOCK",1,"28,16"
