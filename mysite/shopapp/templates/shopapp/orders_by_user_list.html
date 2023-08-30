@@ -1,42 +1,45 @@
 {% extends 'shopapp/base.html' %}
+{% load cache %}
 
 {% block title %}
-    User №{{ user.pk }}'s orders
+    User №{{ owner.pk }}'s orders
 {% endblock %}
 
 {% block body %}
-    {% if user %}
-    <h1>{{ user.username }}'s orders</h1>
+    {% if owner %}
+    <h1>{{ owner.username }}'s orders</h1>
+        {% cache 120 orders_list owner.pk %}
         <div>
-        <ul>
-            {% for order in orders_list %}
-                <li>
-                    <a href="{% url 'shopapp:order_details' pk=order.pk %}">
-                        Order №{{ order.id }}
-                    </a>
-                </li>
-                <p>Delivery address: {{ order.delivery_address }}</p>
-                <p>Promocode used: <code>{{ order.promocode }}</code></p>
-                <p>Creation time: {{ order.creation_time }}</p>
-                <p>
-                    Products:
-                    <ol>
-                        {% for product in order.products.all %}
-                            <li>{{ product.name }} -  <i>{{ product.price }}$</i></li>
-                        {% empty %}
-                            No products in this order
-                        {% endfor %}
-                    </ol>
-                </p>
-                <br>
-            {% empty %}
-                <h2>{{ user.username }} does not have any orders yet</h2>
-            {% endfor %}
-        </ul>
+            <ul>
+                {% for order in orders_list %}
+                    <li>
+                        <a href="{% url 'shopapp:order_details' pk=order.pk %}">
+                            Order №{{ order.id }}
+                        </a>
+                    </li>
+                    <p>Delivery address: {{ order.delivery_address }}</p>
+                    <p>Promocode used: <code>{{ order.promocode }}</code></p>
+                    <p>Creation time: {{ order.creation_time }}</p>
+                    <p>
+                        Products:
+                        <ol>
+                            {% for product in order.products.all %}
+                                <li>{{ product.name }} -  <i>{{ product.price }}$</i></li>
+                            {% empty %}
+                                No products in this order
+                            {% endfor %}
+                        </ol>
+                    </p>
+                    <br>
+                {% empty %}
+                    <h2>{{ owner.username }} does not have any orders yet</h2>
+                {% endfor %}
+            </ul>
         </div>
+        {% endcache %}
     <div>
         <a href="{% url 'myauth:profile_details' pk=profile_id %}">
-            Detail info about {{ user.username }}
+            Detail info about {{ owner.username }}
         </a>
     </div>
     {% else %}

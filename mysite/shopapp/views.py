@@ -197,7 +197,7 @@ class LatestProductsFeed(Feed):
 
 
 class UserOrdersListView(LoginRequiredMixin, ListView):
-    context_object_name = 'user'
+    context_object_name = 'owner'
     template_name = 'shopapp/orders_by_user_list.html'
 
     def get_queryset(self):
