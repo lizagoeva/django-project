@@ -1,0 +1,9 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Export orders info
+{% endblock %}
+
+{% block body %}
+    <pre>{{ orders_json | pprint }}</pre>
+{% endblock %}

@@ -20,6 +20,8 @@ class ProductSerializer(ModelSerializer):
 
 
 class OrderSerializer(ModelSerializer):
+    products = ProductSerializer(read_only=True, many=True)
+
     class Meta:
         model = Order
         fields = [
@@ -27,6 +29,6 @@ class OrderSerializer(ModelSerializer):
             'delivery_address',
             'promocode',
             'creation_time',
-            'user',
+            'user_id',
             'products',
         ]

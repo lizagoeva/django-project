@@ -1,19 +1,21 @@
+import json
 import logging
 
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-
-from rest_framework.exceptions import NotFound
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core.cache import cache
 
 from myauth.models import Profile
 from .models import Product, Order
 from .forms import ProductForm, OrderForm
+from .serializers import OrderSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -201,9 +203,7 @@ class UserOrdersListView(LoginRequiredMixin, ListView):
     template_name = 'shopapp/orders_by_user_list.html'
 
     def get_queryset(self):
-        self.owner = User.objects.filter(pk=self.kwargs['user_id']).first()
-        if not self.owner:
-            raise NotFound(f'User with id {self.kwargs["user_id"]} does not exist')
+        self.owner = get_object_or_404(User, pk=self.kwargs['user_id'])
         return self.owner
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -214,4 +214,26 @@ class UserOrdersListView(LoginRequiredMixin, ListView):
             .prefetch_related('products')
         )
         context['profile_id'] = Profile.objects.filter(user_id=self.owner.pk).values('pk')[0]['pk']
+        return context
+
+
+class UserOrdersExportView(LoginRequiredMixin, TemplateView):
+    template_name = 'shopapp/users_orders_export.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cache_key = f'export_orders_user_{self.kwargs["user_id"]}'
+        print(cache_key)
+        orders_data_json = cache.get(cache_key)
+        if orders_data_json is None:
+            user = get_object_or_404(User, pk=self.kwargs['user_id'])
+            users_orders = Order.objects.filter(user_id=user.pk).order_by('pk')
+            orders_serializer = OrderSerializer(users_orders, many=True)
+
+            encoder = DjangoJSONEncoder()
+            orders_data = encoder.encode(orders_serializer.data)
+            orders_data_json = json.loads(orders_data)
+
+            cache.set(cache_key, orders_data_json, 300)
+        context['orders_json'] = {'orders': orders_data_json}
         return context
