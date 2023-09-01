@@ -223,7 +223,6 @@ class UserOrdersExportView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cache_key = f'export_orders_user_{self.kwargs["user_id"]}'
-        print(cache_key)
         orders_data_json = cache.get(cache_key)
         if orders_data_json is None:
             user = get_object_or_404(User, pk=self.kwargs['user_id'])
